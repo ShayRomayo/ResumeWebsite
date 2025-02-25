@@ -23,8 +23,16 @@ jobs:
     - name: Publish .NET Core Project
       run: dotnet publish ResumeWebsite.sln -c Release -o release --nologo
 
+    # changes the base-tag in index.html from '/' to 'ResumeWebsite
+    - name: Change base-tag in index.thml form / to ResumeWebsite
+      run: sed -i 's/<base href="\/" \/>/<base href="\/ResumeWebsite\/" \/>/g' release/wwwroot/index.html
+
+    # add .nojekyll file to work around GitHub pages treating it like a Jekyll roject.
+    - name: Add .nojekyll file
+      run: touch release/wwwroot/.nojekyll
+
+    # deploys published app to gh-pages branch
     - name: Commit wwwroot to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@v4.7.3
       with:
         FOLDER: release/wwwroot
-        
