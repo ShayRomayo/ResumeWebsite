@@ -24,7 +24,7 @@ jobs:
       run: dotnet publish ResumeWebsite.csproj -c Release -o release --nologo
 
     - name: Commit wwwroot to GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@4.7.2
+      uses: JamesIves/github-pages-deploy-action@v4.7.3
       with:
         FOLDER: release/wwwroot
         
