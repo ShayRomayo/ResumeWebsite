@@ -1,6 +1,6 @@
 name: Deploy to GitHub Pages
 
-# Run workflow on eveyr push to the main branch
+# Run workflow on every push to the main branch
 on:
   push:
     branches: [ main ]
@@ -21,11 +21,11 @@ jobs:
   
     # publishes Blazor project to the release-folder
     - name: Publish .NET Core Project
-      run: dotnet publish ResumeWebsite.sln -c Release -o release --nologo
+      run: dotnet publish CodingShowcase.sln -c Release -o release --nologo
 
     # changes the base-tag in index.html from '/' to 'ResumeWebsite
-    - name: Change base-tag in index.thml form / to ResumeWebsite
-      run: sed -i 's/<base href="\/" \/>/<base href="\/ResumeWebsite\/" \/>/g' release/wwwroot/index.html
+    - name: Change base-tag in index.thml from / to ResumeWebsite
+      run: sed -i 's/<base href="\/" \/>/<base href="\/CodingShowcase\/" \/>/g' release/wwwroot/index.html
 
     # add .nojekyll file to work around GitHub pages treating it like a Jekyll roject.
     - name: Add .nojekyll file
