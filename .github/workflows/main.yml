@@ -1,0 +1,38 @@
+name: Deploy to GitHub Pages
+
+# Run workflow on eveyr push to the main branch
+on:
+  push:
+    branches: [ main ]
+    
+jobs:
+  deploy-to-github-pages:
+    # use ubuntu-latest image to run steps on
+    runs-on: ubuntu-latest
+    steps:
+    # uses GitHub's checkout action to checkout code from the main branch
+    - uses: actions/checkout@v4.2.2
+  
+    # sets up .NET Core SDK
+    - name: Setup .NET Core SDK
+      uses: actions/setup-dotnet@v4.3.0
+      with:
+        dotnet-version: 9.0
+  
+    # publishes Blazor project to the release-folder
+    - name: Publish .NET Core Project
+      run: dotnet publish ResumeWebsite.sln -c Release -o release --nologo
+
+    # changes the base-tag in index.html from '/' to 'ResumeWebsite
+    - name: Change base-tag in index.thml form / to ResumeWebsite
+      run: sed -i 's/<base href="\/" \/>/<base href="\/ResumeWebsite\/" \/>/g' release/wwwroot/index.html
+
+    # add .nojekyll file to work around GitHub pages treating it like a Jekyll roject.
+    - name: Add .nojekyll file
+      run: touch release/wwwroot/.nojekyll
+
+    # deploys published app to gh-pages branch
+    - name: Commit wwwroot to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@v4.7.3
+      with:
+        FOLDER: release/wwwroot
