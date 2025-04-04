@@ -18,26 +18,21 @@ jobs:
       uses: actions/setup-dotnet@v4.3.0
       with:
         dotnet-version: 9.0
-
-    # Install dotnet wasm buildtools workload
-    - name: Install .NET WASM Build Tools
-      run: dotnet workload install wasm-tools
-      
+    
     # publishes Blazor project to the release-folder
     - name: Publish .NET Core Project
-      run: dotnet publish ./CodingShowcase/CodingShowcase.csproj -c Release -p GHPages=true -o release --nologo
+      run: dotnet publish ./CodingShowcase/CodingShowcase.csproj -c Release -o release --nologo
 
     # changes the base-tag in index.html from '/' to 'CodingShowcase
-    # - name: Change base-tag in index.thml from / to CodingShowcase
-    #   run: sed -i 's/<base href="\/" \/>/<base href="\/CodingShowcase\/" \/>/g' release/wwwroot/index.html
+    - name: Change base-tag in index.thml from / to CodingShowcase
+      run: sed -i 's/<base href="\/" \/>/<base href="\/CodingShowcase\/" \/>/g' release/wwwroot/index.html
 
     # add .nojekyll file to work around GitHub pages treating it like a Jekyll roject.
-    # - name: Add .nojekyll file
-    #   run: touch release/wwwroot/.nojekyll
+    - name: Add .nojekyll file
+      run: touch release/wwwroot/.nojekyll
 
     # deploys published app to gh-pages branch
     - name: Commit wwwroot to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@v4.7.3
       with:
-        BRANCH: gh-pages
         FOLDER: release/wwwroot
