@@ -1,0 +1,41 @@
+.sketchCard {
+    margin: 2rem;
+    display: flex;
+    flex-direction: row;
+    border-radius: 0.75rem;
+    
+    background-color: var(--matcha-secondary);
+}
+
+.sketchInfo {
+    max-height: 18rem;
+    padding: 1rem 2rem 1rem 2rem;
+}
+
+h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    align-self: center;
+    justify-self: center;
+    
+    color: var(--dark-text-color);
+}
+
+p {
+    font-size: 1.5rem;
+    font-weight: 400;
+    
+    padding-top: 0.5rem;
+    margin: 0;
+    
+    max-height: 75%;
+    overflow-y: auto;
+    color: var(--dark-subtext-color);
+}
+
+img {
+    width: 18rem;
+    height: 18rem;
+    border-radius: 0.75rem;
+    border: 4px solid var(--matcha-base);
+}

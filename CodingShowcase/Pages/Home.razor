@@ -1,0 +1,52 @@
+﻿@page "/"
+@inject HttpClient Http
+
+<Copy PageTitle="Home"/>
+<div class="testimonialsHeading">
+    <p>Kind Folks</p>
+    <img alt="" src="images/my_profile.png"/>
+    <p>Kind Words</p>
+</div>
+<div class="testimonials">
+    @if (_kindWords == null)
+    {
+        <Testimonial></Testimonial>
+        <Testimonial></Testimonial>
+        <Testimonial></Testimonial>
+    }
+    else
+    {
+        @foreach (var kindWord in _kindWords)
+        {
+            <Testimonial
+                Name="@kindWord.Name"
+                Link="@kindWord.Link"
+                ImageSource="@kindWord.ImageSource"
+                Blurb="@kindWord.Blurb"
+            />
+        }
+    }
+</div>
+
+<PageTitle>Home</PageTitle>
+
+@code
+{
+    private KindWord[]? _kindWords;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _kindWords = await Http.GetFromJsonAsync<KindWord[]>("data/kind_words.json");
+    }
+    
+    public class KindWord
+    {
+        public string? Name { get; set; }
+        
+        public string? Link { get; set; }
+        
+        public string? ImageSource { get; set; }
+        
+        public string? Blurb { get; set; }
+    }
+}

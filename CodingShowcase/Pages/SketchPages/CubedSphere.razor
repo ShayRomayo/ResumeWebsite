@@ -1,0 +1,26 @@
+@page "/sketches/cubed_sphere"
+@implements IAsyncDisposable
+@inject IJSRuntime JsRuntime
+
+<div class="sketch">
+    <h3>Cubical Spherical Game of Life</h3>
+    <p>I was inspired to create this after thinking about how a 3D representation of <a href="https://en.wikipedia.org/wiki/Conway's_Game_of_Life#Rules">Conway's Game of Life</a> might look.  Initially the representation was going to be a cube for which I decided that corner neighbors of corners would wrap to the opposite corner of the same face.  For an additional challenge I forced myself to use only p5.js and no additional libraries for JavaScript and to represent my cube that contains the game on a sphere known as a Cubed Sphere.  This is a prototype for a sketch that might include the possibility of user input for any size grid on the cube using approximations and other techniques for calculating arcs, sizes and translations.  I went with a prototype in this case after looking into other representations of cubed spheres done in p5.js and noticing massive performance drops in most sketches.</p>
+    <div id="cubedSphere">
+        <p>You can left click and drag to rotate, right click and drag to pan, and scroll to zoom.  If a pattern gets locked in some repeating loop you can refresh to generate a new random board.</p>
+    </div>
+</div>
+
+
+@code {
+    
+    protected override async Task OnInitializedAsync()
+    {
+        await JsRuntime.InvokeVoidAsync("removeP5");
+        await JsRuntime.InvokeVoidAsync("initializeCubedSphere");
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        await JsRuntime.InvokeVoidAsync("removeP5");
+    }
+}

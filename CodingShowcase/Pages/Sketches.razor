@@ -1,0 +1,19 @@
+@page "/sketches"
+@inject HttpClient Http
+
+<PageTitle>Sketches</PageTitle>
+<Copy PageTitle="Sketches"/>
+
+@foreach (var sketchCard in _sketchCards ?? [])
+{
+    <SketchCard ImageSource="@sketchCard.ImageSource" Blurb="@sketchCard.Blurb" Title="@sketchCard.Title" SketchLink="@sketchCard.SketchLink"/>
+}
+
+@code {
+    private SketchCard[]? _sketchCards;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _sketchCards = await Http.GetFromJsonAsync<SketchCard[]>("data/sketch_cards.json");
+    }
+}

@@ -1,0 +1,29 @@
+<div class="content">
+    <p>"@Blurb"</p>
+    
+    <div class="infoCard">
+        <img alt="Testimonial Profile Picture" src="@ImageSource"/>
+        <div class="info">
+            <p>@Name</p>
+            <p>
+                <a href="@Link">Profile <i class="fa-solid fa-link"></i></a>
+            </p>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    [Parameter] 
+    public string Blurb { get; set; } = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla in orci risus. Maecenas et faucibus lorem. Sed aliquet massa ullamcorper enim sollicitudin, sit amet porta lorem elementum. Suspendisse tincidunt auctor dolor, at varius purus fringilla eu. Phasellus viverra non risus sit amet facilisis. Morbi semper sodales ligula. Suspendisse imperdiet lacus velit, nec interdum urna accumsan et. Sed rhoncus eros eu odio tempor interdum. Duis elementum aliquet velit, sit amet ullamcorper purus lobortis at. Morbi elementum eleifend neque in mollis. Quisque pellentesque fringilla felis, eget porttitor diam elementum ut. Duis interdum hendrerit neque nec faucibus. Sed massa lorem, venenatis id dui vitae, tincidunt vestibulum libero.";
+    
+    [Parameter] 
+    public string Name { get; set; } = "AN Other";
+
+    [Parameter] 
+    public string Link { get; set; } = "";
+
+    [Parameter] 
+    public string ImageSource { get; set; } = "images/my_profile.png";
+
+}

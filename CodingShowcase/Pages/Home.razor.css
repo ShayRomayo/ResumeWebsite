@@ -1,0 +1,39 @@
+.testimonialsHeading {
+    width: 100%;
+    max-height: 10rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    padding-left: 2.1rem;
+    padding-right: 2.1rem;
+    align-items: center;
+    font-size: 3rem;
+    font-weight: 600;
+}
+
+.testimonialsHeading > p:first-of-type {
+    justify-self: left;
+}
+.testimonialsHeading > p:last-of-type {
+    justify-self: right;
+}
+
+.testimonials {
+    display: flex;
+    flex-direction: row;
+    max-width: 100%;
+    /*margin-left: 2rem;*/
+    /*margin-right: 2rem;*/
+    
+    overflow-x: auto;
+}
+
+img {
+    width: 210px;
+    height: 210px;
+    left: 50%;
+    top: -25%;
+    transform: translateX(-50%);
+    position: relative;
+    z-index: 1;
+    filter: drop-shadow(0px -6px 4px rgba(0, 0, 0, 0.2));
+}

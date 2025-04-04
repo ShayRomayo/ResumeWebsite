@@ -1,0 +1,430 @@
+@page "/games/multiples"
+@using System.Globalization
+@inject StateContainer StateContainer
+
+<div class="gameContainer">
+    <div class="instructions">
+        To play click on the game board and use 'WASD' to shift the board in that direction.
+    </div>
+    <div class="score">Score: @StateContainer.MultiplesScore</div>
+    <br/>
+    <div class="multiples" tabindex="1" @ref="_multiples" @onkeydown="@HandleKeyDown">
+        <div class=@("item0 val" + DisplayValue(StateContainer.Board[0, 0]))>@DisplayValue(StateContainer.Board[0, 0])</div>
+        <div class=@("item1 val" + DisplayValue(StateContainer.Board[1, 0]))>@DisplayValue(StateContainer.Board[1, 0])</div>
+        <div class=@("item2 val" + DisplayValue(StateContainer.Board[2, 0]))>@DisplayValue(StateContainer.Board[2, 0])</div>
+        <div class=@("item3 val" + DisplayValue(StateContainer.Board[3, 0]))>@DisplayValue(StateContainer.Board[3, 0])</div>
+        <div class=@("item4 val" + DisplayValue(StateContainer.Board[0, 1]))>@DisplayValue(StateContainer.Board[0, 1])</div>
+        <div class=@("item5 val" + DisplayValue(StateContainer.Board[1, 1]))>@DisplayValue(StateContainer.Board[1, 1])</div>
+        <div class=@("item6 val" + DisplayValue(StateContainer.Board[2, 1]))>@DisplayValue(StateContainer.Board[2, 1])</div>
+        <div class=@("item7 val" + DisplayValue(StateContainer.Board[3, 1]))>@DisplayValue(StateContainer.Board[3, 1])</div>
+        <div class=@("item8 val" + DisplayValue(StateContainer.Board[0, 2]))>@DisplayValue(StateContainer.Board[0, 2])</div>
+        <div class=@("item9 val" + DisplayValue(StateContainer.Board[1, 2]))>@DisplayValue(StateContainer.Board[1, 2])</div>
+        <div class=@("item10 val" + DisplayValue(StateContainer.Board[2, 2]))>@DisplayValue(StateContainer.Board[2, 2])</div>
+        <div class=@("item11 val" + DisplayValue(StateContainer.Board[3, 2]))>@DisplayValue(StateContainer.Board[3, 2])</div>
+        <div class=@("item12 val" + DisplayValue(StateContainer.Board[0, 3]))>@DisplayValue(StateContainer.Board[0, 3])</div>
+        <div class=@("item13 val" + DisplayValue(StateContainer.Board[1, 3]))>@DisplayValue(StateContainer.Board[1, 3])</div>
+        <div class=@("item14 val" + DisplayValue(StateContainer.Board[2, 3]))>@DisplayValue(StateContainer.Board[2, 3])</div>
+        <div class=@("item15 val" + DisplayValue(StateContainer.Board[3, 3]))>@DisplayValue(StateContainer.Board[3, 3])</div>
+    </div>
+    <button class="newGameButton" @onclick="NewGame">
+        New Game
+    </button>
+</div>
+@code {
+    private Random _rand = new();
+    private ElementReference _multiples;
+    private string _pressedKey = "";
+    private void AdvanceGame()
+    {
+        if (StateContainer.Board.Clone() is not int[,] temp) return;
+        temp[_rand.Next(0, 4), _rand.Next(0, 4)]++;
+        StateContainer.Board = temp;
+    }
+
+    private void HandleKeyDown(KeyboardEventArgs e)
+    {
+        _pressedKey = e.Key;
+        Console.WriteLine(e.Key);
+        var moveDirection = e.Key switch
+        {
+            "w" => Direction.Up,
+            "s" => Direction.Down,
+            "a" => Direction.Left,
+            "d" => Direction.Right,
+            _ => Direction.None
+        };
+
+        if (moveDirection != Direction.None && !StateContainer.MultiplesGameOver)
+        {
+            StateContainer.Board = GameMove(moveDirection);
+            
+            if (IsGameOver(StateContainer.Board))
+            {
+                GameOver();
+            }
+        }
+    }
+
+    private int[,] GameMove(Direction moveDirection)
+    {
+        int[,] combinedBoard = new int[4,4];
+        int[,] shiftedBoard = new int[4, 4];
+
+        bool validCombine;
+        bool validShift;
+
+        switch (moveDirection)
+        {
+            case Direction.Up:
+                validShift = ShiftUp(StateContainer.Board, shiftedBoard);
+                validCombine = CombineUp(shiftedBoard, combinedBoard);
+                ShiftUp(combinedBoard, shiftedBoard);
+                break;
+            case Direction.Down:
+                validShift = ShiftDown(StateContainer.Board, shiftedBoard);
+                validCombine = CombineDown(shiftedBoard, combinedBoard);
+                ShiftDown(combinedBoard, shiftedBoard);
+                break;
+            case Direction.Left:
+                validShift = ShiftLeft(StateContainer.Board, shiftedBoard);
+                validCombine = CombineLeft(shiftedBoard, combinedBoard);
+                ShiftLeft(combinedBoard, shiftedBoard);
+                break;
+            case Direction.Right:
+                validShift = ShiftRight(StateContainer.Board, shiftedBoard);
+                validCombine = CombineRight(shiftedBoard, combinedBoard);
+                ShiftRight(combinedBoard, shiftedBoard);
+                break;
+            default:
+                validShift = false;
+                validCombine = false;
+                break;
+        }
+
+        if (validCombine || validShift)
+        {
+            shiftedBoard = AddNumber(shiftedBoard);
+        }
+        
+        return shiftedBoard;
+    }
+
+    private void GameOver()
+    {
+        StateContainer.MultiplesGameOver = true;
+        
+        // TODO: Do something with the display maybe play an alert
+    }
+
+    private bool IsGameOver(int[,] gameBoard)
+    {
+        for (int x = 0; x < gameBoard.GetLength(0); x++)
+        {
+            for (int y = 0; y < gameBoard.GetLength(1); y++)
+            {
+                if (gameBoard[x, y] == 0)
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private bool ShiftUp(int[,] gameBoard, int[,] shiftBoard)
+    {
+        bool validShift = false;
+
+        for (int x = 0; x < gameBoard.GetLength(0); x++)
+        {
+            int[] currentColumn = new int[4];
+            int[] newColumn = new int[4];
+            int currentVal = 0;
+            int newVal = 0;
+            for (int y = 0; y < gameBoard.GetLength(1); y++)
+            {
+                if (gameBoard[x, y] != 0)
+                {
+                    newColumn[newVal++] = gameBoard[x, y];
+                }
+                
+                currentColumn[currentVal++] = gameBoard[x, y];
+            }
+
+            if (!newColumn.SequenceEqual(currentColumn))
+            {
+                validShift = true;
+            }
+            
+            newVal = 0;
+            for (int y = 0; y < gameBoard.GetLength(1); y++)
+            {
+                shiftBoard[x, y] = newColumn[newVal++];
+            }
+        }
+        
+        return validShift;
+    }
+
+    private bool ShiftDown(int[,] gameBoard, int[,] shiftBoard)
+    {
+        bool validShift = false;
+
+        for (int x = 0; x < gameBoard.GetLength(0); x++)
+        {
+            int[] currentColumn = new int[4];
+            int[] newColumn = new int[4];
+            int currentVal = 0;
+            int newVal = 0;
+            for (int y = gameBoard.GetLength(1) - 1; y >= 0; y--)
+            {
+                if (gameBoard[x, y] != 0)
+                {
+                    newColumn[newVal++] = gameBoard[x, y];
+                }
+                
+                currentColumn[currentVal++] = gameBoard[x, y];
+            }
+
+            if (!newColumn.SequenceEqual(currentColumn))
+            {
+                validShift = true;
+            }
+            
+            newVal = 0;
+            for (int y = gameBoard.GetLength(1) - 1; y >= 0; y--)
+            {
+                shiftBoard[x, y] = newColumn[newVal++];
+            }
+        }
+
+        return validShift;
+    }
+
+    private bool ShiftLeft(int[,] gameBoard, int[,] shiftBoard)
+    {
+        bool validShift = false;
+
+        for (int y = 0; y < gameBoard.GetLength(0); y++)
+        {
+            int[] currentColumn = new int[4];
+            int[] newColumn = new int[4];
+            int currentVal = 0;
+            int newVal = 0;
+            for (int x = 0; x < gameBoard.GetLength(0); x++)
+            {
+                if (gameBoard[x, y] != 0)
+                {
+                    newColumn[newVal++] = gameBoard[x, y];
+                }
+                
+                currentColumn[currentVal++] = gameBoard[x, y];
+            }
+
+            if (!newColumn.SequenceEqual(currentColumn))
+            {
+                validShift = true;
+            }
+            
+            newVal = 0;
+            for (int x = 0; x < gameBoard.GetLength(0); x++)
+            {
+                shiftBoard[x, y] = newColumn[newVal++];
+            }
+        }
+        
+        return validShift;
+    }
+
+    private bool ShiftRight(int[,] gameBoard, int[,] shiftBoard)
+    {
+        bool validShift = false;
+
+        for (int y = 0; y < gameBoard.GetLength(1); y++)
+        {
+            int[] currentColumn = new int[4];
+            int[] newColumn = new int[4];
+            int currentVal = 0;
+            int newVal = 0;
+            for (int x = gameBoard.GetLength(0) - 1; x >= 0; x--)
+            {
+                if (gameBoard[x, y] != 0)
+                {
+                    newColumn[newVal++] = gameBoard[x, y];
+                }
+                
+                currentColumn[currentVal++] = gameBoard[x, y];
+            }
+
+            if (!newColumn.SequenceEqual(currentColumn))
+            {
+                validShift = true;
+            }
+            
+            newVal = 0;
+            for (int x = gameBoard.GetLength(0) - 1; x >= 0; x--)
+            {
+                shiftBoard[x, y] = newColumn[newVal++];
+            }
+        }
+        
+        return validShift;
+    }
+    
+    private bool CombineUp(int[,] gameBoard, int[,] combineBoard)
+    {
+        bool validCombine = false;
+
+        for (int x = 0; x < gameBoard.GetLength(0); x++)
+        {
+            for (int y = 0; y < gameBoard.GetLength(1) - 1 ; y++)
+            {
+                if (gameBoard[x, y] == gameBoard[x, y + 1] && gameBoard[x, y] != 0)
+                {
+                    combineBoard[x, y] = gameBoard[x, y] + 1;
+                    combineBoard[x, y + 1] = 0;
+                    AddScore(combineBoard[x, y]);
+                    y++;
+                    validCombine = true;
+                }
+                else
+                {
+                    combineBoard[x, y] = gameBoard[x, y];
+                    combineBoard[x, y + 1] = gameBoard[x, y + 1];
+                }
+            }
+        }
+        
+        return validCombine;
+    }
+    
+    private bool CombineDown(int[,] gameBoard, int[,] combineBoard)
+    {
+        bool validCombine = false;
+
+        for (int x = 0; x < gameBoard.GetLength(0); x++)
+        {
+            for (int y = gameBoard.GetLength(1) - 1; y > 0 ; y--)
+            {
+                if (gameBoard[x, y] == gameBoard[x, y - 1] && gameBoard[x, y] != 0)
+                {
+                    combineBoard[x, y] = gameBoard[x, y] + 1;
+                    combineBoard[x, y - 1] = 0;
+                    AddScore(combineBoard[x, y]);
+                    y--;
+                    validCombine = true;
+                }
+                else
+                {
+                    combineBoard[x, y] = gameBoard[x, y];
+                    combineBoard[x, y - 1] = gameBoard[x, y - 1];
+                }
+            }
+        }
+
+        return validCombine;
+    }
+    
+    private bool CombineLeft(int[,] gameBoard, int[,] combineBoard)
+    {
+        bool validCombine = false;
+        
+        for (int y = 0; y < gameBoard.GetLength(1); y++)
+        {
+            for (int x = 0; x < gameBoard.GetLength(0) - 1 ; x++)
+            {
+                if (gameBoard[x, y] == gameBoard[x + 1, y] && gameBoard[x, y] != 0)
+                {
+                    combineBoard[x, y] = gameBoard[x, y] + 1;
+                    combineBoard[x + 1, y] = 0;
+                    AddScore(combineBoard[x, y]);
+                    x++;
+                    validCombine = true;
+                }
+                else
+                {
+                    combineBoard[x, y] = gameBoard[x, y];
+                    combineBoard[x + 1, y] = gameBoard[x + 1, y];
+                }
+            }
+        }
+
+        return validCombine;
+    }
+    
+    private bool CombineRight(int[,] gameBoard, int[,] combineBoard)
+    {
+        bool validCombine = false;
+
+        for (int y = 0; y < gameBoard.GetLength(1); y++)
+        {
+            for (int x = gameBoard.GetLength(0) - 1; x > 0 ; x--)
+            {
+                if (gameBoard[x, y] == gameBoard[x - 1, y] && gameBoard[x, y] != 0)
+                {
+                    combineBoard[x, y] = gameBoard[x, y] + 1;
+                    combineBoard[x - 1, y] = 0;
+                    AddScore(combineBoard[x, y]);
+                    x--;
+                    validCombine = true;
+                }
+                else
+                {
+                    combineBoard[x, y] = gameBoard[x, y];
+                    combineBoard[x - 1, y] = gameBoard[x - 1, y];
+                }
+            }
+        }
+        
+        return validCombine;
+    }
+    
+    private string DisplayValue(int pow2)
+    {
+        return pow2 != 0 ? Math.Pow(2, pow2).ToString(CultureInfo.InvariantCulture) : "";
+    }
+
+    private void AddScore(int combiner)
+    {
+        StateContainer.MultiplesScore += (combiner - 1) * (int) Math.Pow(2, combiner);
+    }
+
+    private int[,] AddNumber(int[,] shiftedBoard)
+    {
+        bool havePlacedNumber = false;
+        while (!havePlacedNumber)
+        {
+            int x = _rand.Next(0, 4), y = _rand.Next(0, 4);
+
+            if (shiftedBoard[x, y] == 0)
+            {
+                shiftedBoard[x, y] = _rand.Next(0, 10) < 8 ? 1 : 2;
+                havePlacedNumber = true;
+            }
+        }
+
+        return shiftedBoard;
+    }
+
+    private void NewGame()
+    {
+        StateContainer.Board = AddNumber(new int[4, 4]);
+        StateContainer.MultiplesScore = 0;
+    }
+    
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await _multiples.FocusAsync();
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        NewGame();
+    }
+
+}

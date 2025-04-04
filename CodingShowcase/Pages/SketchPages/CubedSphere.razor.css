@@ -1,0 +1,33 @@
+.sketch {
+    display: flex;
+    flex-direction: column;
+}
+
+h3 {
+    align-self: center;
+    justify-self: center;
+    margin: 2rem;
+    font-size: 2rem;
+    text-align: center;
+    color: var(--dark-text-color);
+}
+p {
+    align-self: center;
+    justify-self: center;
+    margin: 1rem;
+    
+    font-size: 1.5rem;
+    color: var(--dark-subtext-color);
+    text-align: center;
+}
+
+#cubedSphere {
+    display: flex;
+    flex-direction: row;
+}
+
+#cubedSphere p {
+    width: 20%;
+    
+    text-align: left;
+}

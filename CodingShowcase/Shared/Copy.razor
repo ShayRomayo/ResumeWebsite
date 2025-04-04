@@ -1,0 +1,17 @@
+@inject HttpClient Http
+
+<div class="copy">
+    <h1 class="copyHeading">@_copyText?.Heading</h1>
+    <p class="copyBody">@_copyText?.Body</p>
+</div>
+
+@code {
+    [Parameter] public string PageTitle { get; set; } = "Home";
+    private CopyText? _copyText;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _copyText = Array.Find(await Http.GetFromJsonAsync<CopyText[]>("data/copies.json") ?? [], copy => copy.Page == PageTitle);
+    }
+
+}
