@@ -1,0 +1,8 @@
+[
+  {
+    "ImageSource": "images/GoL_example.png",
+    "Title": "Conway's Spherical Game of Life",
+    "Blurb": "I was inspired to create this after thinking about how a 3D representation of Conway's Game of Life might look.  Initially the representation was going to be a cube for which I decided that corner neighbors of corners would wrap to the opposite corner of the same face.  For an additional challenge I forced myself to use only p5.js and no additional libraries for JavaScript and to represent my cube that contains the game on a sphere known as a Cubed Sphere.",
+    "SketchLink": "/sketches/cubed_sphere"
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "Page": "Home",
+    "Heading": "The King of Software",
+    "Body": "Welcome to my little corner of the internet, I hope you enjoy your stay.  If you’re here looking to recruit me, I present these kind words by some former colleagues of mine.  If you’re here for a good time please see some of my projects and explore to your heart’s content.  You can scroll to find even more kind words."
+  },
+  {
+    "Page":  "Sketches",
+    "Heading": "Sketches",
+    "Body": "This is the home for all of my personal sketches made in p5.js.  The limitation for most of these is that no alternative libraries, of which there are many.  Think of this page as a playground where you can enjoy the artistic side of coding with some interactive elements to boot.  Click on any of the thumbnail images to be taken to the page hosting the sketch."
+  },
+  {
+    "Page": "Games",
+    "Heading": "Games",
+    "Body": "Games are a big reason why I got into software development, and continues to be a passion of mine.  I find a good way for me to learn a new technology is to create a quick arcade style game whose rules have already been established i.e. “Flappy Bird”, “Pong”, “2048”.  What follows is some games that I felt like sharing as I’ve developed them to facilitate learning.  Only some of these games will be playable in browser, any that aren’t will take you to a GitHub repo with instructions on running."
+  }
+]

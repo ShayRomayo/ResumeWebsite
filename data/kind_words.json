@@ -1,0 +1,26 @@
+[
+  {
+    "Name": "Jahan Hayes",
+    "Link": "https://www.linkedin.com/in/jahan-hayes-604b184b/",
+    "ImageSource": "images/jahan_headshot.png",
+    "Blurb": "I worked directly with Noah as his Dev Team lead for over a year at Cognizant, and I have nothing but good things to say about him. In that time he was perfectly comfortable doing full stack development (Angular and Java), but he really excelled at Java Spring server side engineering. As a team lead with much less back-end expertise, it was a relief to be able to hand off a rough outline of a new feature or architecture and be confident that Noah could run with it without much direct supervision or scrutiny. He was an invaluable asset to the team and always produced excellent work."
+  },
+  {
+    "Name": "Vishnu Paturi",
+    "Link": "https://www.linkedin.com/in/vishnu-paturi-691a67103/",
+    "ImageSource": "images/vishnu_headshot.png",
+    "Blurb": "It has been great to have Noah on board, He is honest, dependable, requires minimum oversight and can be trusted to complete his job. Noah takes tasks seriously and solves them innovatively . He will not give up until the goal is achieved and the quality of outputs is excellent he puts a lot of thought into his work. Beyond that, he is an excellent problem solver who was always able to address complex issues with strategy and confidence. \n Definitely would love to work with him again"
+  },
+  {
+    "Name": "Surafel Bekele",
+    "Link": "https://www.surafelbekele.com",
+    "ImageSource": "images/surafel_headshot.png",
+    "Blurb": "Noah is an excellent engineer who doesn’t shy away from problems. During our time with a client company Exact Science, we faced issues around consistent time keeping in an application we adopted. Noah took the challenge presented by our lead and was able to deliver a consistent, timezone specific experience for all the users of the application that varied between the United States and Japan. With his technical expertise, Noah was able to align the layers of the application (Postgres, Spring, and Angular) to have accurate timings for the creation, storage, and exportation of records."
+  },
+  {
+    "Name": "Brandon Hawfitch",
+    "Link": "https://www.linkedin.com/in/bhawfitch/",
+    "ImageSource": "images/brandon_headshot.png",
+    "Blurb": "Noah and I worked closely together on a full-stack project at Cognizant for the Exact Sciences client. Together, we were responsible for implementing a new time system for both the backend server and frontend client. Noah was a highly competent partner for this task, and was very effective at both communicating technical concepts clearly and approaching complex issues with novel solutions. Despite the deeply rooted complexity inherent to the task of handling time, we were able to devise an effective system ahead of schedule. Noah is an intent, focused individual who excels in the field of software engineering and system design."
+  }
+]

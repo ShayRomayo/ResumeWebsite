@@ -1,7 +1,10 @@
 window.initializeTest = () => {
     new p5(testSketch, window.document.getElementById("testSketch"));
-    return true;
 };
+
+window.removeP5 = () => {
+    window.document.getElementsByClassName("p5Canvas").item(0).remove();
+}
 
 let testSketch = function(p5){
 
