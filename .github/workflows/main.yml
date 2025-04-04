@@ -18,13 +18,13 @@ jobs:
       uses: actions/setup-dotnet@v4.3.0
       with:
         dotnet-version: 9.0
-  
+    
     # publishes Blazor project to the release-folder
     - name: Publish .NET Core Project
       run: dotnet publish CodingShowcase.sln -c Release -o release --nologo
 
-    # changes the base-tag in index.html from '/' to 'ResumeWebsite
-    - name: Change base-tag in index.thml from / to ResumeWebsite
+    # changes the base-tag in index.html from '/' to 'CodingShowcase
+    - name: Change base-tag in index.thml from / to CodingShowcase
       run: sed -i 's/<base href="\/" \/>/<base href="\/CodingShowcase\/" \/>/g' release/wwwroot/index.html
 
     # add .nojekyll file to work around GitHub pages treating it like a Jekyll roject.
