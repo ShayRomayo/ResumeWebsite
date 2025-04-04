@@ -25,7 +25,7 @@ jobs:
       
     # publishes Blazor project to the release-folder
     - name: Publish .NET Core Project
-      run: dotnet publish ./CodingShowcase/CodingShowcase.csprj -c Release -p GHPages=true -o release --nologo
+      run: dotnet publish ./CodingShowcase/CodingShowcase.csproj -c Release -p GHPages=true -o release --nologo
 
     # changes the base-tag in index.html from '/' to 'CodingShowcase
     # - name: Change base-tag in index.thml from / to CodingShowcase
