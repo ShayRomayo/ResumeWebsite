@@ -49,10 +49,21 @@
 }
 
 img {
-    max-width: 64px;
-    max-height: 64px;
+    max-width: 4rem;
+    max-height: 4rem;
 }
 
 a {
     text-decoration: none;
+}
+
+@media (max-width: 1023px) {
+    .content {
+        min-width: 45%;
+    }
+}
+@media (max-width: 767px) {
+    .content {
+        min-width: 90%;
+    }
 }

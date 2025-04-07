@@ -28,7 +28,7 @@ p {
     padding-top: 0.5rem;
     margin: 0;
     
-    max-height: 75%;
+    max-height: calc(75% - 0.5rem);
     overflow-y: auto;
     color: var(--dark-subtext-color);
 }
@@ -38,4 +38,19 @@ img {
     height: 18rem;
     border-radius: 0.75rem;
     border: 4px solid var(--matcha-base);
+}
+
+@media (max-width: 425px) {
+    img {
+        width: calc(75vw - 4rem);
+        height: calc(75vw - 4rem);
+    }
+    
+    .sketchCard {
+        flex-direction: column;
+        align-items: center;
+    }
+    .sketchInfo {
+        height: calc(75vw - 4rem);
+    }
 }
