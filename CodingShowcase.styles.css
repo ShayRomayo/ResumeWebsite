@@ -16,12 +16,12 @@
     margin: 1rem;
     
     border: 3px var(--dark-cream) solid;
-    width: 500px;
-    height: 500px;
+    width: 45vw;
+    height: 45vw;
 }
 
 .multiples > div[b-inj9ldcduy] {
-    font-size: 56px;
+    font-size: 3rem;
     color: var(--dark-subtext-color);
     border: 2px var(--dark-cream) solid;
     width: 100%;
@@ -88,9 +88,18 @@
 }
 .val1024[b-inj9ldcduy] {
     background-color: #6789af;
+    font-size: 3rem;
 }
 .val2048[b-inj9ldcduy] {
     background-color: #677bb6;
+    font-size: 3rem;
+}
+
+@media(max-width: 767px) {
+    .multiples[b-inj9ldcduy] {
+        width: calc(100vw - 1rem);
+        height: calc(100vw - 1rem);
+    }
 }
 
 /* /Layout/MainLayout.razor.rz.scp.css */
