@@ -149,6 +149,10 @@ code {
     flex: 0 0 auto;
 }
 
+.gestureHandler {
+    touch-action: none;
+}
+
 canvas {
     max-width: 75vw;
     max-height: 75vw;

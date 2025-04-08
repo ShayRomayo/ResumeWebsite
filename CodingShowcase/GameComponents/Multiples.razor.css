@@ -100,8 +100,3 @@
         height: calc(100vw - 1rem);
     }
 }
-
-body {
-    overscroll-behavior: contain;
-}
-
