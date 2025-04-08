@@ -1,11 +1,11 @@
 {
   "mainAssemblyName": "CodingShowcase",
   "resources": {
-    "hash": "sha256-wXsQ0knirSephVao+yt2e+25/TCX8NIhyW3Hown3xJY=",
+    "hash": "sha256-aJzvFCnbqtYFxfyA8ehIABGR350udfN5QdkEtTHG/y0=",
     "fingerprinting": {
-      "CodingShowcase.a7r8okgsch.wasm": "CodingShowcase.wasm",
-      "Microsoft.AspNetCore.Components.ffrsjm205g.wasm": "Microsoft.AspNetCore.Components.wasm",
-      "Microsoft.AspNetCore.Components.Web.gubjyf6b6f.wasm": "Microsoft.AspNetCore.Components.Web.wasm",
+      "CodingShowcase.ikaqcj1iqb.wasm": "CodingShowcase.wasm",
+      "Microsoft.AspNetCore.Components.vjl2535lr9.wasm": "Microsoft.AspNetCore.Components.wasm",
+      "Microsoft.AspNetCore.Components.Web.sued770jw9.wasm": "Microsoft.AspNetCore.Components.Web.wasm",
       "Microsoft.AspNetCore.Components.WebAssembly.pq7fdyw1tb.wasm": "Microsoft.AspNetCore.Components.WebAssembly.wasm",
       "Microsoft.Extensions.Configuration.Abstractions.f9jq6u05xu.wasm": "Microsoft.Extensions.Configuration.Abstractions.wasm",
       "Microsoft.Extensions.Configuration.Json.77nptesqpn.wasm": "Microsoft.Extensions.Configuration.Json.wasm",
@@ -65,9 +65,9 @@
       "System.Runtime.InteropServices.JavaScript.0tgicm7vjk.wasm": "sha256-bAbPaONHne7R1hItHoY8/SYWlDb84JZQ1cxd1Y+tJn0="
     },
     "assembly": {
-      "CodingShowcase.a7r8okgsch.wasm": "sha256-Stw9cCXDyMrz5uQreJ0FyMUmK6dS1RmaYgu/RlFaQqw=",
-      "Microsoft.AspNetCore.Components.ffrsjm205g.wasm": "sha256-JVs3W9qHS0qVwcoSEENXE9rXLQNi8tX8/ahYW5WtAOY=",
-      "Microsoft.AspNetCore.Components.Web.gubjyf6b6f.wasm": "sha256-SB8SQSSaWizqBy6eyQjE18gaoNkVgzvWkwP+rw2Iu4Q=",
+      "CodingShowcase.ikaqcj1iqb.wasm": "sha256-/v8pJDK2rdnyGBQ8NHSINpUSTQS5YAuQXDlDUNUa7f8=",
+      "Microsoft.AspNetCore.Components.vjl2535lr9.wasm": "sha256-m3qnqzOJo4FG4nLQW2OlgQncW/VBcvwBXMJtc2XdQIY=",
+      "Microsoft.AspNetCore.Components.Web.sued770jw9.wasm": "sha256-jNDleAGFFwCUJtXV4UDkSbDD5CUfUQf8QCnfeVc1KjY=",
       "Microsoft.AspNetCore.Components.WebAssembly.pq7fdyw1tb.wasm": "sha256-D/ZUWrvE7bqOtBfOWuLj+4RNqOvNZ0SnjD6QrBwUcb8=",
       "Microsoft.Extensions.Configuration.Abstractions.f9jq6u05xu.wasm": "sha256-AyL87FvJMf14Dcn8HeQ3n2veg/RQGVGCjfpJPt1RQC4=",
       "Microsoft.Extensions.Configuration.Json.77nptesqpn.wasm": "sha256-TUkUL2Leb3zmGe8ZZUHAzyb8vZoEzua1H8f8stc7xRw=",
