@@ -101,11 +101,6 @@
         height: calc(100vw - 1rem);
     }
 }
-
-body[b-inj9ldcduy] {
-    overscroll-behavior: contain;
-}
-
 /* /Layout/MainLayout.razor.rz.scp.css */
 .page[b-2cbgetwl1x] {
     position: relative;
