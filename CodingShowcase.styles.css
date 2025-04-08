@@ -18,6 +18,8 @@
     border: 3px var(--dark-cream) solid;
     width: 45vw;
     height: 45vw;
+    
+    overflow-y: hidden;
 }
 
 .multiples > div[b-inj9ldcduy] {
