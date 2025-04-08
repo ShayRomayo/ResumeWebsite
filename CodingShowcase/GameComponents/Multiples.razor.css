@@ -101,3 +101,7 @@
     }
 }
 
+body {
+    overscroll-behavior: contain;
+}
+
