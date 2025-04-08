@@ -1,5 +1,4 @@
-@using System.Reflection.Metadata
-<section class="gestureHandler" @ontouchstart="HandleTouchStart" @ontouchend="HandleTouchEnd">
+<section class="gestureHandler" @ontouchstart="HandleTouchStart" @ontouchend="HandleTouchEnd" @ontouchend:preventdefault="true">
     @ChildContent
 </section>
 
