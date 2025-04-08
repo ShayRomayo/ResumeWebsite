@@ -2,49 +2,42 @@
 @using System.Globalization
 @inject StateContainer StateContainer
 
-<div class="gameContainer">
-    <div class="instructions">
-        To play click on the game board and use 'WASD' to shift the board in that direction.
+<GestureHandler OnSwipe="HandleSwipe">
+    <div class="gameContainer">
+        <div class="instructions">
+            To play click on the game board and use 'WASD' to shift the board in that direction. Or swipe if you're on a mobile device.
+        </div>
+        <div class="score">Score: @StateContainer.MultiplesScore</div>
+        <br/>
+        <div class="multiples" tabindex="1" @ref="_multiples" @onkeydown="@HandleKeyDown">
+            <div class=@("item0 val" + DisplayValue(StateContainer.Board[0, 0]))>@DisplayValue(StateContainer.Board[0, 0])</div>
+            <div class=@("item1 val" + DisplayValue(StateContainer.Board[1, 0]))>@DisplayValue(StateContainer.Board[1, 0])</div>
+            <div class=@("item2 val" + DisplayValue(StateContainer.Board[2, 0]))>@DisplayValue(StateContainer.Board[2, 0])</div>
+            <div class=@("item3 val" + DisplayValue(StateContainer.Board[3, 0]))>@DisplayValue(StateContainer.Board[3, 0])</div>
+            <div class=@("item4 val" + DisplayValue(StateContainer.Board[0, 1]))>@DisplayValue(StateContainer.Board[0, 1])</div>
+            <div class=@("item5 val" + DisplayValue(StateContainer.Board[1, 1]))>@DisplayValue(StateContainer.Board[1, 1])</div>
+            <div class=@("item6 val" + DisplayValue(StateContainer.Board[2, 1]))>@DisplayValue(StateContainer.Board[2, 1])</div>
+            <div class=@("item7 val" + DisplayValue(StateContainer.Board[3, 1]))>@DisplayValue(StateContainer.Board[3, 1])</div>
+            <div class=@("item8 val" + DisplayValue(StateContainer.Board[0, 2]))>@DisplayValue(StateContainer.Board[0, 2])</div>
+            <div class=@("item9 val" + DisplayValue(StateContainer.Board[1, 2]))>@DisplayValue(StateContainer.Board[1, 2])</div>
+            <div class=@("item10 val" + DisplayValue(StateContainer.Board[2, 2]))>@DisplayValue(StateContainer.Board[2, 2])</div>
+            <div class=@("item11 val" + DisplayValue(StateContainer.Board[3, 2]))>@DisplayValue(StateContainer.Board[3, 2])</div>
+            <div class=@("item12 val" + DisplayValue(StateContainer.Board[0, 3]))>@DisplayValue(StateContainer.Board[0, 3])</div>
+            <div class=@("item13 val" + DisplayValue(StateContainer.Board[1, 3]))>@DisplayValue(StateContainer.Board[1, 3])</div>
+            <div class=@("item14 val" + DisplayValue(StateContainer.Board[2, 3]))>@DisplayValue(StateContainer.Board[2, 3])</div>
+            <div class=@("item15 val" + DisplayValue(StateContainer.Board[3, 3]))>@DisplayValue(StateContainer.Board[3, 3])</div>
+        </div>
+        <button class="newGameButton" @onclick="NewGame">
+            New Game
+        </button>
     </div>
-    <div class="score">Score: @StateContainer.MultiplesScore</div>
-    <br/>
-    <div class="multiples" tabindex="1" @ref="_multiples" @onkeydown="@HandleKeyDown">
-        <div class=@("item0 val" + DisplayValue(StateContainer.Board[0, 0]))>@DisplayValue(StateContainer.Board[0, 0])</div>
-        <div class=@("item1 val" + DisplayValue(StateContainer.Board[1, 0]))>@DisplayValue(StateContainer.Board[1, 0])</div>
-        <div class=@("item2 val" + DisplayValue(StateContainer.Board[2, 0]))>@DisplayValue(StateContainer.Board[2, 0])</div>
-        <div class=@("item3 val" + DisplayValue(StateContainer.Board[3, 0]))>@DisplayValue(StateContainer.Board[3, 0])</div>
-        <div class=@("item4 val" + DisplayValue(StateContainer.Board[0, 1]))>@DisplayValue(StateContainer.Board[0, 1])</div>
-        <div class=@("item5 val" + DisplayValue(StateContainer.Board[1, 1]))>@DisplayValue(StateContainer.Board[1, 1])</div>
-        <div class=@("item6 val" + DisplayValue(StateContainer.Board[2, 1]))>@DisplayValue(StateContainer.Board[2, 1])</div>
-        <div class=@("item7 val" + DisplayValue(StateContainer.Board[3, 1]))>@DisplayValue(StateContainer.Board[3, 1])</div>
-        <div class=@("item8 val" + DisplayValue(StateContainer.Board[0, 2]))>@DisplayValue(StateContainer.Board[0, 2])</div>
-        <div class=@("item9 val" + DisplayValue(StateContainer.Board[1, 2]))>@DisplayValue(StateContainer.Board[1, 2])</div>
-        <div class=@("item10 val" + DisplayValue(StateContainer.Board[2, 2]))>@DisplayValue(StateContainer.Board[2, 2])</div>
-        <div class=@("item11 val" + DisplayValue(StateContainer.Board[3, 2]))>@DisplayValue(StateContainer.Board[3, 2])</div>
-        <div class=@("item12 val" + DisplayValue(StateContainer.Board[0, 3]))>@DisplayValue(StateContainer.Board[0, 3])</div>
-        <div class=@("item13 val" + DisplayValue(StateContainer.Board[1, 3]))>@DisplayValue(StateContainer.Board[1, 3])</div>
-        <div class=@("item14 val" + DisplayValue(StateContainer.Board[2, 3]))>@DisplayValue(StateContainer.Board[2, 3])</div>
-        <div class=@("item15 val" + DisplayValue(StateContainer.Board[3, 3]))>@DisplayValue(StateContainer.Board[3, 3])</div>
-    </div>
-    <button class="newGameButton" @onclick="NewGame">
-        New Game
-    </button>
-</div>
+</GestureHandler>
 @code {
     private Random _rand = new();
     private ElementReference _multiples;
-    private string _pressedKey = "";
-    private void AdvanceGame()
-    {
-        if (StateContainer.Board.Clone() is not int[,] temp) return;
-        temp[_rand.Next(0, 4), _rand.Next(0, 4)]++;
-        StateContainer.Board = temp;
-    }
 
     private void HandleKeyDown(KeyboardEventArgs e)
     {
-        _pressedKey = e.Key;
-        Console.WriteLine(e.Key);
         var moveDirection = e.Key switch
         {
             "w" => Direction.Up,
@@ -62,6 +55,18 @@
             {
                 GameOver();
             }
+        }
+    }
+
+    private void HandleSwipe(Direction direction)
+    {
+        Console.WriteLine("{0} is the test direction", direction);
+        
+        StateContainer.Board = GameMove(direction);
+
+        if (IsGameOver(StateContainer.Board))
+        {
+            GameOver();
         }
     }
 

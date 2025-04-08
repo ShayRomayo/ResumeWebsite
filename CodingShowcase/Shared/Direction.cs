@@ -1,5 +1,3 @@
-using System.ComponentModel;
-
 namespace CodingShowcase.Shared;
 
 public enum Direction

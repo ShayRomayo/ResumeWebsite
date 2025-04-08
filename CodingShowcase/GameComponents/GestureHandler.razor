@@ -1,0 +1,60 @@
+@using System.Reflection.Metadata
+<section class="gestureHandler" @ontouchstart="HandleTouchStart" @ontouchend="HandleTouchEnd">
+    @ChildContent
+</section>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter] 
+    public Func<Direction, Task>? OnSwipeAsync { get; set; }
+
+    [Parameter] 
+    public Action<Direction>? OnSwipe { get; set; }
+
+    [Parameter] 
+    public bool HandleAsync { get; set; }
+
+    private (TouchPoint ReferencePoint, DateTime StartTime) _startPoint;
+
+    void HandleTouchStart(TouchEventArgs touch)
+    {
+        _startPoint.ReferencePoint = touch.TargetTouches[0];
+        _startPoint.StartTime = DateTime.Now;
+
+        Console.WriteLine("{0}, {1} is the ReferencePoint", _startPoint.ReferencePoint.ClientX, _startPoint.ReferencePoint.ClientY);
+    }
+
+    void HandleTouchEnd(TouchEventArgs touch)
+    {
+        const double swipeThreshold = 0.6;
+        
+        if (_startPoint.ReferencePoint == null)
+        {
+            return;
+        }
+
+        var endReferencePoint = touch.ChangedTouches[0];
+        Console.WriteLine("{0}, {1} is the end referencePoint", endReferencePoint.ClientX, endReferencePoint.ClientY);
+        var diffX = _startPoint.ReferencePoint.ClientX - endReferencePoint.ClientX;
+        var diffY = _startPoint.ReferencePoint.ClientY - endReferencePoint.ClientY;
+        var diffTime = DateTime.Now - _startPoint.StartTime;
+        var velocityX = Math.Abs(diffX) / diffTime.Milliseconds;
+        var velocityY = Math.Abs(diffY) / diffTime.Milliseconds;
+
+        Console.WriteLine(velocityX);
+        if (velocityX < swipeThreshold && velocityY < swipeThreshold) return; // Ensure a swipe was intentional
+        if (Math.Abs(velocityX - velocityY) < 0.5) return;  // Ensure there is a distinct direction
+
+        if (velocityX >= swipeThreshold)
+        {
+            OnSwipe?.Invoke(diffX < 0 ? Direction.Right : Direction.Left);
+        }
+
+        if (velocityY >= swipeThreshold)
+        {
+            OnSwipe?.Invoke(diffY < 0 ? Direction.Down : Direction.Up);
+        }
+    }
+}
